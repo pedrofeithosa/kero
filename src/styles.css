@@ -1,0 +1,298 @@
+@import "tailwindcss" source(none);
+@source "../src";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+/*
+ * ============================================================
+ * KERO MAIS — DESIGN SYSTEM OFICIAL
+ * ------------------------------------------------------------
+ * Marca: Vermelho #D62828 · Preto #111111 · Branco #FFFFFF
+ * Destaques: Amarelo #F4B400 · Verde #16A34A · Azul #2563EB
+ * Nunca use cores hardcoded em componentes: use os tokens.
+ * ============================================================
+ */
+
+@theme inline {
+  /* ---------- Raio de borda (por componente) ---------- */
+  --radius-xs: 6px;
+  --radius-sm: 10px;
+  --radius-md: 12px;
+  --radius-input: 14px;
+  --radius-button: 16px;
+  --radius-lg: 16px;
+  --radius-card: 20px;
+  --radius-xl: 20px;
+  --radius-modal: 24px;
+  --radius-2xl: 24px;
+  --radius-3xl: 32px;
+
+  /* ---------- Cores semânticas ---------- */
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-primary-hover: var(--primary-hover);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-highlight: var(--highlight);
+  --color-highlight-foreground: var(--highlight-foreground);
+  --color-success: var(--success);
+  --color-success-foreground: var(--success-foreground);
+  --color-info: var(--info);
+  --color-info-foreground: var(--info-foreground);
+  --color-warning: var(--warning);
+  --color-warning-foreground: var(--warning-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-whatsapp: var(--whatsapp);
+  --color-whatsapp-foreground: var(--whatsapp-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-ring-offset-background: var(--background);
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-ring: var(--sidebar-ring);
+
+  /* ---------- Tipografia ---------- */
+  --font-display: "Poppins", ui-sans-serif, system-ui, sans-serif;
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+
+  --text-caption: 0.75rem; /* 12px */
+  --text-caption--line-height: 1.4;
+  --text-small: 0.875rem; /* 14px */
+  --text-small--line-height: 1.5;
+  --text-body: 1rem; /* 16px */
+  --text-body--line-height: 1.6;
+  --text-h5: 1.25rem; /* 20px */
+  --text-h5--line-height: 1.4;
+  --text-h4: 1.5rem; /* 24px */
+  --text-h4--line-height: 1.3;
+  --text-h3: 2rem; /* 32px */
+  --text-h3--line-height: 1.2;
+  --text-h2: 2.5rem; /* 40px */
+  --text-h2--line-height: 1.15;
+  --text-h1: 3rem; /* 48px */
+  --text-h1--line-height: 1.08;
+  --text-hero: 3.5rem; /* 56px */
+  --text-hero--line-height: 1.02;
+
+  /* ---------- Sombras (leves) ---------- */
+  --shadow-soft: 0 1px 2px rgb(17 17 17 / 0.04), 0 2px 8px -4px rgb(17 17 17 / 0.06);
+  --shadow-card: 0 1px 2px rgb(17 17 17 / 0.04), 0 8px 24px -12px rgb(17 17 17 / 0.10);
+  --shadow-hover: 0 12px 32px -14px rgb(17 17 17 / 0.18);
+  --shadow-brand: 0 12px 32px -12px rgb(214 40 40 / 0.35);
+  --shadow-float: 0 16px 40px -12px rgb(17 17 17 / 0.24);
+
+  /* ---------- Layout ---------- */
+  --spacing-gutter-mobile: 16px;
+  --spacing-gutter-tablet: 24px;
+  --spacing-gutter-desktop: 32px;
+  --container-page: 1280px;
+
+  /* ---------- Transições ---------- */
+  --ease-brand: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+:root {
+  --radius: 16px;
+
+  --background: #ffffff;
+  --foreground: #111111;
+
+  --card: #ffffff;
+  --card-foreground: #111111;
+  --popover: #ffffff;
+  --popover-foreground: #111111;
+
+  /* Vermelho Kero */
+  --primary: #d62828;
+  --primary-foreground: #ffffff;
+  --primary-hover: #b81f1f;
+
+  /* Preto Kero */
+  --secondary: #111111;
+  --secondary-foreground: #ffffff;
+
+  --muted: #f7f7f7;
+  --muted-foreground: #444444;
+
+  --accent: #f7f7f7;
+  --accent-foreground: #111111;
+
+  --highlight: #f4b400;
+  --highlight-foreground: #111111;
+
+  --success: #16a34a;
+  --success-foreground: #ffffff;
+  --info: #2563eb;
+  --info-foreground: #ffffff;
+  --warning: #f4b400;
+  --warning-foreground: #111111;
+  --destructive: #dc2626;
+  --destructive-foreground: #ffffff;
+
+  --whatsapp: #25d366;
+  --whatsapp-foreground: #ffffff;
+
+  --border: #d9d9d9;
+  --input: #d9d9d9;
+  --ring: #d62828;
+
+  --chart-1: #d62828;
+  --chart-2: #f4b400;
+  --chart-3: #111111;
+  --chart-4: #16a34a;
+  --chart-5: #2563eb;
+
+  --sidebar: #111111;
+  --sidebar-foreground: #f7f7f7;
+  --sidebar-primary: #d62828;
+  --sidebar-primary-foreground: #ffffff;
+  --sidebar-accent: #232323;
+  --sidebar-accent-foreground: #ffffff;
+  --sidebar-border: #2e2e2e;
+  --sidebar-ring: #d62828;
+}
+
+.dark {
+  --background: #0e0e0e;
+  --foreground: #f7f7f7;
+  --card: #171717;
+  --card-foreground: #f7f7f7;
+  --popover: #171717;
+  --popover-foreground: #f7f7f7;
+  --primary: #ef4444;
+  --primary-foreground: #ffffff;
+  --primary-hover: #d62828;
+  --secondary: #232323;
+  --secondary-foreground: #f7f7f7;
+  --muted: #1c1c1c;
+  --muted-foreground: #a3a3a3;
+  --accent: #232323;
+  --accent-foreground: #f7f7f7;
+  --highlight: #f4b400;
+  --highlight-foreground: #111111;
+  --border: rgb(255 255 255 / 12%);
+  --input: rgb(255 255 255 / 14%);
+  --ring: #ef4444;
+}
+
+@layer base {
+  * {
+    border-color: var(--color-border);
+  }
+  body {
+    background-color: var(--color-background);
+    color: var(--color-foreground);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+  }
+  h1, h2, h3, h4, h5 {
+    font-family: var(--font-display);
+    font-weight: 800;
+    letter-spacing: -0.02em;
+  }
+  :focus-visible {
+    outline: 2px solid var(--color-ring);
+    outline-offset: 2px;
+  }
+}
+
+/* Container oficial: 1280px + gutters responsivos (16/24/32) */
+@utility container-page {
+  width: 100%;
+  max-width: var(--container-page);
+  margin-inline: auto;
+  padding-inline: 16px;
+  @media (width >= 768px) {
+    padding-inline: 24px;
+  }
+  @media (width >= 1024px) {
+    padding-inline: 32px;
+  }
+}
+
+/* Grid oficial de 12 colunas */
+@utility grid-12 {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  gap: 16px;
+  @media (width >= 768px) {
+    gap: 24px;
+  }
+}
+
+@utility hover-lift {
+  transition: transform 0.25s var(--ease-brand), box-shadow 0.25s var(--ease-brand);
+  &:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-hover);
+  }
+}
+
+/* ---- Comanda da cozinha (impressão térmica) ----
+   Largura do papel: 58mm. Para impressora de 80mm, troque 58mm por 80mm e 54mm por 76mm. */
+.kds-print {
+  display: none;
+}
+@media print {
+  @page {
+    size: 58mm auto;
+    margin: 2mm;
+  }
+  body > *:not(.kds-print) {
+    display: none !important;
+  }
+  html,
+  body {
+    background: #fff !important;
+  }
+  .kds-print {
+    display: block !important;
+    width: 54mm;
+    color: #000;
+    background: #fff;
+    font-family: ui-monospace, "Courier New", monospace;
+    font-size: 11px;
+    line-height: 1.35;
+  }
+  .kds-print p {
+    margin: 0;
+    white-space: pre-wrap;
+    word-break: break-word;
+  }
+  .kds-print hr {
+    border: 0;
+    border-top: 1px dashed #000;
+    margin: 4px 0;
+  }
+  .kds-print-title {
+    font-size: 15px;
+    font-weight: 800;
+    text-align: center;
+  }
+  .kds-print-item {
+    margin-bottom: 4px;
+  }
+}

@@ -1,0 +1,27 @@
+{
+  "version": "7",
+  "dialect": "postgresql",
+  "entries": [
+    {
+      "idx": 0,
+      "version": "7",
+      "when": 1789679797679,
+      "tag": "0000_extend_app_roles",
+      "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1789679951815,
+      "tag": "0001_admin_catalog_and_settings",
+      "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1789899618243,
+      "tag": "0002_catalog_storage_policies",
+      "breakpoints": true
+    }
+  ]
+}
