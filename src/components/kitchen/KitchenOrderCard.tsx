@@ -1,8 +1,8 @@
-import { Clock, MapPin, Phone, Printer } from "lucide-react";
+import { Clock, CreditCard, MapPin, Phone, Printer } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import type { KitchenOrder, KitchenStatus } from "@/services/KitchenService";
-import { addressLines, brl, minutesSince, orderNumber, paymentText } from "./kitchenFormat";
+import { addressLines, brl, changeToReturn, formatPhone, minutesSince, orderNumber, paymentText } from "./kitchenFormat";
 
 export interface KitchenAction {
   label: string;
@@ -43,6 +43,7 @@ export function KitchenOrderCard({ order, now, busy, onAdvance, onPrint }: Props
   const isNew = order.status === "received";
   const address = addressLines(order);
   const phone = order.customer_snapshot?.phone;
+  const troco = changeToReturn(order);
 
   return (
     <article
@@ -78,7 +79,7 @@ export function KitchenOrderCard({ order, now, busy, onAdvance, onPrint }: Props
         <p className="font-semibold">{order.customer_snapshot?.name || "Cliente"}</p>
         {phone ? (
           <a href={`tel:${phone}`} className="mt-1 inline-flex items-center gap-1 text-sm text-primary underline">
-            <Phone className="size-4" aria-hidden /> {phone}
+            <Phone className="size-4" aria-hidden /> {formatPhone(phone)}
           </a>
         ) : null}
         {address.length > 0 ? (
@@ -111,9 +112,26 @@ export function KitchenOrderCard({ order, now, busy, onAdvance, onPrint }: Props
         <p className="mt-3 rounded bg-highlight/20 px-2 py-1 text-sm font-semibold">Pedido: {order.notes}</p>
       ) : null}
 
-      <div className="mt-3 flex items-center justify-between gap-2 border-t pt-3 text-sm">
-        <span className="font-medium">{paymentText(order)}</span>
-        <span className="font-display text-lg font-extrabold">{brl(order.total)}</span>
+      <div className="mt-3 space-y-1 border-t pt-3 text-sm">
+        {order.delivery_type === "delivery" ? (
+          <div className="flex items-center justify-between">
+            <span>Taxa de entrega</span>
+            <span>{brl(order.delivery_fee)}</span>
+          </div>
+        ) : null}
+        {Number(order.discount) > 0 ? (
+          <div className="flex items-center justify-between">
+            <span>Desconto{order.coupon_code ? ` (${order.coupon_code})` : ""}</span>
+            <span>-{brl(order.discount)}</span>
+          </div>
+        ) : null}
+        <div className="flex items-center justify-between gap-2">
+          <span className="flex items-center gap-1 font-semibold">
+            <CreditCard className="size-4 shrink-0" aria-hidden /> {paymentText(order)}
+          </span>
+          <span className="font-display text-lg font-extrabold">{brl(order.total)}</span>
+        </div>
+        {troco ? <p className="font-bold">Levar troco: {brl(troco)}</p> : null}
       </div>
 
       <div className="mt-4 grid grid-cols-[1fr_auto] gap-2">

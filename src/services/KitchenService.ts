@@ -9,6 +9,8 @@ export interface KitchenOrderItem {
   quantity: number;
   observations: string | null;
   product_options: Array<{ name: string; price_delta?: number }> | null;
+  unit_price: number;
+  total: number;
 }
 
 export interface KitchenOrder {
@@ -19,6 +21,10 @@ export interface KitchenOrder {
   payment_method: "pix" | "card_on_delivery" | "cash" | "online_card";
   payment_status: "pending" | "paid" | "failed" | "refunded";
   change_for: number | null;
+  subtotal: number;
+  delivery_fee: number;
+  discount: number;
+  coupon_code: string | null;
   total: number;
   eta_minutes: number;
   notes: string | null;
@@ -30,6 +36,7 @@ export interface KitchenOrder {
     complement?: string;
     district?: string;
     city?: string;
+    state?: string;
     reference?: string;
   } | null;
   customer_snapshot: { name?: string; phone?: string } | null;
@@ -44,7 +51,7 @@ export const KitchenService = {
     const { data, error } = await supabase
       .from("orders")
       .select(
-        "id, number, status, delivery_type, payment_method, payment_status, change_for, total, eta_minutes, notes, created_at, scheduled_for, address_snapshot, customer_snapshot, order_items(id, product_name, quantity, observations, product_options)",
+        "id, number, status, delivery_type, payment_method, payment_status, change_for, subtotal, delivery_fee, discount, coupon_code, total, eta_minutes, notes, created_at, scheduled_for, address_snapshot, customer_snapshot, order_items(id, product_name, quantity, observations, product_options, unit_price, total)",
       )
       .in("status", ACTIVE)
       .order("created_at", { ascending: true });
