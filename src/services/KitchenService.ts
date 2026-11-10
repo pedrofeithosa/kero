@@ -67,6 +67,17 @@ export const KitchenService = {
     if (error) throw new Error(error.message);
   },
 
+  /** Cancela o pedido (motivo obrigatório; o cliente vê o motivo na página do pedido). */
+  async cancel(orderId: string, reason: string, note?: string) {
+    const { error } = await supabase.rpc("admin_update_order_status", {
+      _order_id: orderId,
+      _status: "cancelled",
+      _reason: reason,
+      _note: note || undefined,
+    });
+    if (error) throw new Error(error.message);
+  },
+
   /** Tempo real: avisa quando um pedido muda e informa o estado da conexão. */
   subscribe(onChange: () => void, onState: (state: string) => void) {
     const channel = supabase

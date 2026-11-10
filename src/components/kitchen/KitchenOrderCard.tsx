@@ -1,4 +1,4 @@
-import { Clock, CreditCard, MapPin, Phone, Printer } from "lucide-react";
+import { Clock, CreditCard, MapPin, Phone, Printer, XCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import type { KitchenOrder, KitchenStatus } from "@/services/KitchenService";
@@ -34,9 +34,10 @@ interface Props {
   busy: boolean;
   onAdvance: (order: KitchenOrder, next: KitchenStatus) => void;
   onPrint: (order: KitchenOrder) => void;
+  onCancel: (order: KitchenOrder) => void;
 }
 
-export function KitchenOrderCard({ order, now, busy, onAdvance, onPrint }: Props) {
+export function KitchenOrderCard({ order, now, busy, onAdvance, onPrint, onCancel }: Props) {
   const minutes = minutesSince(order.created_at, now);
   const late = minutes > order.eta_minutes && order.status !== "out_for_delivery";
   const action = nextAction(order);
@@ -146,6 +147,15 @@ export function KitchenOrderCard({ order, now, busy, onAdvance, onPrint }: Props
           <Printer />
         </Button>
       </div>
+      <Button
+        variant="ghost"
+        size="sm"
+        full
+        className="mt-2 text-destructive hover:bg-destructive/10 hover:text-destructive"
+        onClick={() => onCancel(order)}
+      >
+        <XCircle /> Cancelar pedido
+      </Button>
     </article>
   );
 }

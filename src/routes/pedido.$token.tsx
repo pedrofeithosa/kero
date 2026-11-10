@@ -1,5 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { CheckCircle2, Clock, MapPin, Wallet } from "lucide-react";
+import { CheckCircle2, Clock, MapPin, Wallet, XCircle } from "lucide-react";
 import { PublicShell } from "@/components/layout/PublicShell";
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
@@ -9,7 +9,8 @@ import { PriceSummary } from "@/components/cart/PriceSummary";
 import { OrderStatusBadge, OrderTimeline } from "@/components/order/OrderStatus";
 import { useOrder } from "@/features/orders/useOrder";
 import { formatOrderNumber, PAYMENT_METHOD_LABEL, type OrderStatusId } from "@/features/checkout/types";
-import { ADDRESS_LINE } from "@/lib/business";
+import { ADDRESS_LINE, BUSINESS, whatsappUrl } from "@/lib/business";
+import { cn } from "@/lib/utils";
 
 export const Route = createFileRoute("/pedido/$token")({
   head: () => ({
@@ -77,9 +78,35 @@ function OrderTrackingPage() {
   return (
     <PublicShell>
       <div className="mx-auto max-w-3xl space-y-8 px-4 py-10">
-        <header className="space-y-3 rounded-card border border-success/40 bg-success/10 p-6 text-center">
-          <CheckCircle2 className="mx-auto size-10 text-success" aria-hidden="true" />
-          <h1 className="font-display text-h3 font-extrabold">Seu pedido foi recebido com sucesso</h1>
+        <header
+          className={cn(
+            "space-y-3 rounded-card border p-6 text-center",
+            order.status === "cancelled" ? "border-destructive/40 bg-destructive/10" : "border-success/40 bg-success/10",
+          )}
+        >
+          {order.status === "cancelled" ? (
+            <XCircle className="mx-auto size-10 text-destructive" aria-hidden="true" />
+          ) : (
+            <CheckCircle2 className="mx-auto size-10 text-success" aria-hidden="true" />
+          )}
+          <h1 className="font-display text-h3 font-extrabold">
+            {order.status === "cancelled" ? "Seu pedido foi cancelado" : "Seu pedido foi recebido com sucesso"}
+          </h1>
+          {order.status === "cancelled" ? (
+            <p className="text-body">
+              {order.cancel_reason ? `Motivo: ${order.cancel_reason}. ` : ""}
+              Qualquer dúvida,{" "}
+              <a
+                href={whatsappUrl(`Olá! Sobre o pedido ${formatOrderNumber(order.number)} cancelado.`)}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="font-semibold text-primary underline underline-offset-4"
+              >
+                fale com a {BUSINESS.name} pelo WhatsApp
+              </a>
+              .
+            </p>
+          ) : null}
           <p className="font-display text-h5 font-bold text-primary">{formatOrderNumber(order.number)}</p>
           <div className="flex flex-wrap items-center justify-center gap-3 text-small text-muted-foreground">
             <span className="flex items-center gap-1">

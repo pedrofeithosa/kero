@@ -136,6 +136,8 @@ export interface OrderRecord {
   scheduled_for: string | null;
   notes: string | null;
   created_at: string;
+  /** Motivo, quando o pedido foi cancelado pela loja */
+  cancel_reason?: string | null;
   items: OrderItemRecord[];
   events: Array<{ status: OrderStatusId; created_at: string }>;
 }

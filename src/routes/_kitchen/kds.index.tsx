@@ -7,7 +7,9 @@ import { KDSShell } from "@/components/layout/KDSShell";
 import { EmptyState } from "@/components/shared/EmptyState";
 import { Button } from "@/components/ui/button";
 import { KitchenOrderCard } from "@/components/kitchen/KitchenOrderCard";
+import { CancelOrderDialog } from "@/components/kitchen/CancelOrderDialog";
 import { PrintTicket } from "@/components/kitchen/PrintTicket";
+import { orderNumber } from "@/components/kitchen/kitchenFormat";
 import {
   KITCHEN_QUERY_KEY,
   useKitchenAlert,
@@ -32,6 +34,7 @@ function KitchenPage() {
   const now = useNow();
   const [tab, setTab] = React.useState<TabId>("new");
   const [printing, setPrinting] = React.useState<KitchenOrder | null>(null);
+  const [cancelling, setCancelling] = React.useState<KitchenOrder | null>(null);
 
   useWakeLock();
 
@@ -56,6 +59,17 @@ function KitchenPage() {
       KitchenService.setStatus(input.id, input.status),
     onSuccess: () => void queryClient.invalidateQueries({ queryKey: KITCHEN_QUERY_KEY }),
     onError: (e: Error) => toast.error(`Não foi possível atualizar o pedido: ${e.message}`),
+  });
+
+  const cancelMutation = useMutation({
+    mutationFn: (input: { id: string; reason: string; note: string }) =>
+      KitchenService.cancel(input.id, input.reason, input.note),
+    onSuccess: () => {
+      toast.success(`Pedido ${cancelling ? orderNumber(cancelling.number) : ""} cancelado`);
+      setCancelling(null);
+      void queryClient.invalidateQueries({ queryKey: KITCHEN_QUERY_KEY });
+    },
+    onError: (e: Error) => toast.error(`Não foi possível cancelar: ${e.message}`),
   });
 
   /* Impressão: monta a comanda, abre a janela de impressão do aparelho e limpa depois. */
@@ -149,12 +163,19 @@ function KitchenPage() {
               busy={mutation.isPending && mutation.variables?.id === order.id}
               onAdvance={(o, next) => mutation.mutate({ id: o.id, status: next })}
               onPrint={setPrinting}
+              onCancel={setCancelling}
             />
           ))}
         </div>
       )}
 
       <PrintTicket order={printing} />
+      <CancelOrderDialog
+        order={cancelling}
+        busy={cancelMutation.isPending}
+        onClose={() => setCancelling(null)}
+        onConfirm={(reason, note) => cancelling && cancelMutation.mutate({ id: cancelling.id, reason, note })}
+      />
     </KDSShell>
   );
 }
